@@ -29,7 +29,7 @@ void play_state_run()
 
 void play_state_tick(float DeltaT)
 {
-	player_tick(&s_player, DeltaT);
+	player_tick(&s_player, DeltaT, &s_room);
 }
 
 void play_state_draw()

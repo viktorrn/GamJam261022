@@ -153,7 +153,7 @@ void game_tick()
         play_state_tick(DeltaT);
         break;
     }
-    player_tick(&s_player, DeltaT);
+    player_tick(&s_player, DeltaT, &s_room);
 }
 
 void game_draw()

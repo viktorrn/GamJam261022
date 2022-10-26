@@ -5,9 +5,11 @@
 
 struct player
 {
-	vec2 position{};
 	vec2 target{};
+	vec2 position{};
 	vec2 oldPosition{};
+	vec2 moveDirection{};
+	
 	bool moving;
 	float rotation;
 	int character;
@@ -16,6 +18,6 @@ struct player
 
 extern void player_load(player* p, const room* r, int character);
 
-extern void player_tick(player* p, float deltaT);
+extern void player_tick(player* p, float deltaT, const room* r);
 
 extern void player_draw(const player* p);
