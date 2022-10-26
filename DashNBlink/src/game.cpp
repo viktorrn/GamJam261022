@@ -4,29 +4,89 @@
 #include <chrono>
 #include <thread>
 
-#include "graphics.h"
-#include "tiles.h"
-#include "player.h"
+#include "GLFW/glfw3.h"
 
-static room s_room;
-static player s_player;
+#include "graphics.h"
+#include "start_state.h"
+#include "play_state.h"
+
+#define MINIAUDIO_IMPLEMENTATION
+#include "miniaudio.h"
+
+static state s_current_state = START;
+
+static ma_engine s_engine;
+static ma_device_config s_config;
+static ma_context s_context;
+static ma_device s_device;
+
+void data_callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uint32 frameCount)
+{
+    // In playback mode copy data to pOutput. In capture mode read data from pInput. In full-duplex mode, both
+    // pOutput and pInput will be valid and you can move data from pInput into pOutput. Never process more than
+    // frameCount frames.
+}
 
 bool game_init()
 {
+    std::cout << "Soundengine starting\n" << std::endl;
+
+    ma_result result;
+    if (ma_context_init(NULL, 0, NULL, &s_context) != MA_SUCCESS) {
+        std::cout << "Soundengine Context failed starting\n" << std::endl;
+        return -2;
+    }
+
+    ma_device_info* pPlaybackInfos;
+    ma_uint32 playbackCount;
+    ma_device_info* pCaptureInfos;
+    ma_uint32 captureCount;
+    if (ma_context_get_devices(&s_context, &pPlaybackInfos, &playbackCount, &pCaptureInfos, &captureCount) != MA_SUCCESS) {
+        std::cout << "Soundengine context get device failed\n" << std::endl;
+    }
+
+    // Loop over each device info and do something with it. Here we just print the name with their index. You may want
+    // to give the user the opportunity to choose which device they'd prefer.
+    for (ma_uint32 iDevice = 0; iDevice < playbackCount; iDevice += 1) {
+        printf("%d - %s\n", iDevice, pPlaybackInfos[iDevice].name);
+    }
+
+    s_config = ma_device_config_init(ma_device_type_playback);
+    s_config.playback.pDeviceID = &pPlaybackInfos[0].id;
+    s_config.playback.format = ma_format_f32;   // Set to ma_format_unknown to use the device's native format.
+    s_config.playback.channels = 2;            // Set to 0 to use the device's native channel count.
+    s_config.sampleRate = 0;                  // Set to 0 to use the device's native sample rate.
+    s_config.dataCallback = data_callback;   // This function will be called when miniaudio needs more data.
+    //config.pUserData = pMyCustomData;   // Can be accessed from the device object (device.pUserData).
+
+    if (ma_device_init(NULL, &s_config, &s_device) != MA_SUCCESS) {
+        return -1;  // Failed to initialize the device.
+    }
+
+    ma_device_start(&s_device);     // The device is sleeping by default so you'll need to start it manually.
+
+    result = ma_engine_init(NULL, &s_engine);
+    if (result != MA_SUCCESS) {
+        return result;  // Failed to initialize the engine.
+        std::cout << result << std::endl;
+    }
+
+    /*For audio documentation https://miniaud.io/docs/manual/index.html*/
+
     if (!graphics_init())
     {
         return 0;
     }
 
-    room_load(&s_room, "res/map.png", "res/lookup.png");
-    player_load(&s_player, &s_room, 0);
+    start_state_init(&s_engine);
+    play_state_init(&s_engine);
 
     return 1;
 }
 
 bool s_running = false;
 
-void game_run(ma_engine* engine)
+void game_run()
 {
     int frames = 0;
     double delta_time = 1000.0 / 90.0;
@@ -39,6 +99,8 @@ void game_run(ma_engine* engine)
     std::chrono::duration<float, std::milli> since_last_print;
 
     s_running = true;
+
+    start_state_run();
 
     while (s_running)
     {
@@ -75,20 +137,52 @@ void game_run(ma_engine* engine)
 
 void game_tick()
 {
-    player_tick(&s_player);
+    switch (s_current_state)
+    {
+    case START:
+        start_state_tick();
+        break;
+    case PLAY:
+        play_state_tick();
+        break;
+    }
 }
 
 void game_draw()
 {
-    graphics_prepare();
-
-    room_draw(&s_room);
-    player_draw(&s_player);
-
-    graphics_present();
+    switch (s_current_state)
+    {
+    case START:
+        start_state_draw();
+        break;
+    case PLAY:
+        play_state_draw();
+        break;
+    }
 }
 
 void game_clean_up()
 {
+    start_state_clean_up();
+    play_state_clean_up();
+
     graphics_clean_up();
+
+    ma_device_uninit(&s_device);
+    ma_context_uninit(&s_context);
+}
+
+void game_state_set(state new_state)
+{
+    s_current_state = new_state;
+
+    switch (s_current_state)
+    {
+    case START:
+        start_state_run();
+        break;
+    case PLAY:
+        play_state_run();
+        break;
+    }
 }

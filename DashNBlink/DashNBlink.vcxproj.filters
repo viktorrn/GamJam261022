@@ -1,96 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Source Files\Core">
-      <UniqueIdentifier>{e42889fa-a2c0-4e6b-9b97-79ebe21d5a21}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Core">
-      <UniqueIdentifier>{8ac4a981-2de3-4ca3-bbb3-38db15f19519}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Graphics">
-      <UniqueIdentifier>{247575f1-a06e-472c-860b-9ba2702c83a8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Graphics">
-      <UniqueIdentifier>{1e2f3969-a876-47e6-bea1-96011b9e4eab}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Vendor">
-      <UniqueIdentifier>{c6960224-05ea-4de1-bd70-db152a21d33b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Vendor">
-      <UniqueIdentifier>{a3f32caf-f4d3-42f0-9d89-1fd42506099c}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="src\entry.cpp" />
+    <ClCompile Include="src\game.cpp" />
+    <ClCompile Include="src\graphics.cpp" />
+    <ClCompile Include="src\player.cpp" />
+    <ClCompile Include="src\rect.cpp" />
+    <ClCompile Include="src\shader.cpp" />
+    <ClCompile Include="src\stb_image.cpp" />
+    <ClCompile Include="src\texture.cpp" />
+    <ClCompile Include="src\tiles.cpp" />
+    <ClCompile Include="src\start_state.cpp" />
+    <ClCompile Include="src\play_state.cpp" />
+    <ClCompile Include="src\keyboard.cpp" />
+    <ClCompile Include="src\mouse.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\game.cpp">
-      <Filter>Source Files\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\entry.cpp">
-      <Filter>Source Files\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics.cpp">
-      <Filter>Source Files\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\stb_image.cpp">
-      <Filter>Source Files\Vendor</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tiles.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\rect.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\shader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\texture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <ClInclude Include="src\game.h" />
+    <ClInclude Include="src\graphics.h" />
+    <ClInclude Include="src\miniaudio.h" />
+    <ClInclude Include="src\player.h" />
+    <ClInclude Include="src\rect.h" />
+    <ClInclude Include="src\shader.h" />
+    <ClInclude Include="src\stb_image.h" />
+    <ClInclude Include="src\texture.h" />
+    <ClInclude Include="src\tiles.h" />
+    <ClInclude Include="src\start_state.h" />
+    <ClInclude Include="src\play_state.h" />
+    <ClInclude Include="src\keyboard.h" />
+    <ClInclude Include="src\mouse.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\game.h">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics.h">
-      <Filter>Header Files\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\stb_image.h">
-      <Filter>Header Files\Vendor</Filter>
-    </ClInclude>
-    <ClInclude Include="src\tiles.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\rect.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\texture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\miniaudio.h">
-      <Filter>Header Files\Vendor</Filter>
-    <ClInclude Include="src\player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="res\shaders\tile.shader" />
     <None Include="res\shaders\player.shader" />
+    <None Include="res\shaders\tile.shader" />
   </ItemGroup>
 </Project>
