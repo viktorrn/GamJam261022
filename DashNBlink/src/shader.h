@@ -15,6 +15,8 @@ extern void shader_unbind();
 
 extern unsigned int shader_find_location(shader* s, const char* name);
 
+extern void shader_set_uniform1i(unsigned int location, int x);
+
 extern void shader_set_uniform1f(unsigned int location, float x);
 
 extern void shader_set_uniform2f(unsigned int location, float x, float y);

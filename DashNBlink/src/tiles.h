@@ -1,14 +1,17 @@
 #pragma once
 
+#include "texture.h"
+
 #define SPRITE_DIMENSION 4
 #define SPRITE_SHEET_DIMENSION 16
 
 struct sprite_sheet
 {
-	float data[SPRITE_SHEET_DIMENSION * SPRITE_DIMENSION * SPRITE_SHEET_DIMENSION * SPRITE_DIMENSION * 4];
+	texture tex;
 };
 
-extern void sprite_sheet_load(sprite_sheet* sheet, const char* sprites);
+extern void sprite_sheet_create(sprite_sheet* sheet, const char* sprites);
+extern void sprite_sheet_destroy(sprite_sheet* sheet);
 
 struct tile
 {

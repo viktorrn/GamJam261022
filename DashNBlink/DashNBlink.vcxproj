@@ -140,6 +140,7 @@
     <ClCompile Include="src\rect.cpp" />
     <ClCompile Include="src\shader.cpp" />
     <ClCompile Include="src\stb_image.cpp" />
+    <ClCompile Include="src\texture.cpp" />
     <ClCompile Include="src\tiles.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +149,7 @@
     <ClInclude Include="src\rect.h" />
     <ClInclude Include="src\shader.h" />
     <ClInclude Include="src\stb_image.h" />
+    <ClInclude Include="src\texture.h" />
     <ClInclude Include="src\tiles.h" />
   </ItemGroup>
   <ItemGroup>

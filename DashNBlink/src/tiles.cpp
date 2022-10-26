@@ -6,7 +6,7 @@
 
 #include "graphics.h"
 
-void sprite_sheet_load(sprite_sheet* sheet, const char* sprites)
+void sprite_sheet_create(sprite_sheet* sheet, const char* sprites)
 {
 	stbi_set_flip_vertically_on_load(1);
 
@@ -19,12 +19,14 @@ void sprite_sheet_load(sprite_sheet* sheet, const char* sprites)
 		return;
 	}
 
-	for (int i = 0; i < sprites_width * sprites_height * 4; i++)
-	{
-		sheet->data[i] = (float)sprites_buffer[i] / 255.0f;
-	}
+	texture_create(&(sheet->tex), sprites_buffer, sprites_width, sprites_height);
 
 	stbi_image_free(sprites_buffer);
+}
+
+extern void sprite_sheet_destroy(sprite_sheet* sheet)
+{
+	texture_destroy(&(sheet->tex));
 }
 
 void room_load(room* room, const char* map, const char* lookup)
@@ -60,8 +62,6 @@ void room_load(room* room, const char* map, const char* lookup)
 					lookup_buffer[i * 3 + 2] == map_buffer[(y * map_width + x) * 3 + 2])
 				{
 					room->tiles[x][y].index = i;
-
-					std::cout << i << std::endl;
 				}
 			}
 		}
@@ -78,10 +78,7 @@ void room_draw(const room* room)
 	{
 		for (int x = 0; x < ROOM_DIMENSION; x++)
 		{
-			if (room->tiles[x][y].index == 13)
-			{
-				graphics_tile_draw(&(room->tiles[x][y]), (float)x, (float)y);
-			}
+			graphics_tile_draw(&(room->tiles[x][y]), (float)x, (float)y);
 		}
 	}
 }

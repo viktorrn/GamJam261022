@@ -93,6 +93,11 @@ unsigned int shader_find_location(shader* s, const char* name)
     return glGetUniformLocation(s->id, name);
 }
 
+void shader_set_uniform1i(unsigned int location, int x)
+{
+    glUniform1i(location, x);
+}
+
 void shader_set_uniform1f(unsigned int location, float x)
 {
     glUniform1f(location, x);
