@@ -83,6 +83,8 @@
     <ClInclude Include="src\texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\miniaudio.h">
+      <Filter>Header Files\Vendor</Filter>
     <ClInclude Include="src\player.h">
       <Filter>Header Files</Filter>
     </ClInclude>

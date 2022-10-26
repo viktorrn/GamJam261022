@@ -26,7 +26,7 @@ bool game_init()
 
 bool s_running = false;
 
-void game_run()
+void game_run(ma_engine* engine)
 {
     int frames = 0;
     double delta_time = 1000.0 / 90.0;
@@ -69,6 +69,7 @@ void game_run()
         {
             s_running = false;
         }
+ 
     }
 }
 
