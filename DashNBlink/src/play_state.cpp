@@ -27,9 +27,9 @@ void play_state_run()
 	ma_sound_set_looping(&s_theme, MA_TRUE);
 }
 
-void play_state_tick()
+void play_state_tick(float DeltaT)
 {
-	player_tick(&s_player);
+	player_tick(&s_player, DeltaT);
 }
 
 void play_state_draw()
