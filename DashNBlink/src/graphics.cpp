@@ -132,7 +132,7 @@ void graphics_player_draw(const player* p)
     shader_bind(&s_player_shader);
 
     shader_set_uniform1f(s_player_uniform_id, (float)p->character);
-    shader_set_uniform2f(s_player_uniform_coords, p->x, p->y);
+    shader_set_uniform2f(s_player_uniform_coords, p->position.x, p->position.y);
 
     texture_bind(&(s_tile_sheet.tex), 0);
     shader_set_uniform1f(s_tile_uniform_tex, 0);

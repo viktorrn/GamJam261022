@@ -163,6 +163,7 @@
     <ClInclude Include="src\shader.h" />
     <ClInclude Include="src\start_state.h" />
     <ClInclude Include="src\stb_image.h" />
+    <ClInclude Include="src\struct.h" />
     <ClInclude Include="src\texture.h" />
     <ClInclude Include="src\tiles.h" />
   </ItemGroup>

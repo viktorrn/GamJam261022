@@ -6,6 +6,7 @@
 
 #include "GLFW/glfw3.h"
 
+<<<<<<< HEAD
 #include "graphics.h"
 #include "start_state.h"
 #include "play_state.h"
@@ -26,6 +27,11 @@ void data_callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uin
     // pOutput and pInput will be valid and you can move data from pInput into pOutput. Never process more than
     // frameCount frames.
 }
+=======
+static room s_room;
+static player s_player;
+static float DeltaT = 0;
+>>>>>>> player
 
 bool game_init()
 {
@@ -90,7 +96,9 @@ void game_run()
 {
     int frames = 0;
     double delta_time = 1000.0 / 90.0;
+    
 
+   
     std::chrono::system_clock::time_point last_frame = std::chrono::system_clock::now();
     std::chrono::duration<double, std::milli> work_time;
 
@@ -126,6 +134,7 @@ void game_run()
         std::chrono::duration<double, std::milli> delta_ms(delta_time - work_time.count());
         auto delta_ms_duration = std::chrono::duration_cast<std::chrono::milliseconds>(delta_ms);
         std::this_thread::sleep_for(std::chrono::milliseconds(delta_ms_duration.count()));
+        DeltaT = delta_ms.count()/1000.0f;
 
         if (graphics_window_closed())
         {
@@ -137,6 +146,7 @@ void game_run()
 
 void game_tick()
 {
+<<<<<<< HEAD
     switch (s_current_state)
     {
     case START:
@@ -146,6 +156,11 @@ void game_tick()
         play_state_tick();
         break;
     }
+=======
+
+    player_tick(&s_player, DeltaT);
+
+>>>>>>> player
 }
 
 void game_draw()
