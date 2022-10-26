@@ -1,0 +1,23 @@
+
+Tile size 
+4 pixels
+
+Rotation offset
+16 pixels
+
+Rotation order
+East | South | West | North
+
+
+NAME 		ROW INDEX	Horizontal index
+Player		0			0
+Dummy tile	0			1
+one face	1
+south corner	2
+north corner	3
+two face	4
+no face		5
+goal face south	6
+goal face north 7		
+
+
