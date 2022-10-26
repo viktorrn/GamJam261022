@@ -10,6 +10,7 @@
 
 static room s_room;
 static player s_player;
+static float DeltaT = 0;
 
 bool game_init()
 {
@@ -30,7 +31,9 @@ void game_run()
 {
     int frames = 0;
     double delta_time = 1000.0 / 90.0;
+    
 
+   
     std::chrono::system_clock::time_point last_frame = std::chrono::system_clock::now();
     std::chrono::duration<double, std::milli> work_time;
 
@@ -64,6 +67,7 @@ void game_run()
         std::chrono::duration<double, std::milli> delta_ms(delta_time - work_time.count());
         auto delta_ms_duration = std::chrono::duration_cast<std::chrono::milliseconds>(delta_ms);
         std::this_thread::sleep_for(std::chrono::milliseconds(delta_ms_duration.count()));
+        DeltaT = delta_ms.count()/1000.0f;
 
         if (graphics_window_closed())
         {
@@ -74,7 +78,9 @@ void game_run()
 
 void game_tick()
 {
-    player_tick(&s_player);
+
+    player_tick(&s_player, DeltaT);
+
 }
 
 void game_draw()

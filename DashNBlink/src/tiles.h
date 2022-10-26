@@ -1,6 +1,7 @@
 #pragma once
 
 #include "texture.h"
+#include "struct.h"
 
 #define SPRITE_DIMENSION 4
 #define SPRITE_SHEET_DIMENSION 16
@@ -16,6 +17,7 @@ extern void sprite_sheet_destroy(sprite_sheet* sheet);
 struct tile
 {
 	int index;
+	vec2 facing{0,0};
 };
 
 #define ROOM_DIMENSION 16
