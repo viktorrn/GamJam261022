@@ -4,6 +4,8 @@
 
 #include "stb_image.h"
 
+#include "graphics.h"
+
 void sprite_sheet_load(sprite_sheet* sheet, const char* sprites)
 {
 	stbi_set_flip_vertically_on_load(1);
@@ -58,6 +60,8 @@ void room_load(room* room, const char* map, const char* lookup)
 					lookup_buffer[i * 3 + 2] == map_buffer[(y * map_width + x) * 3 + 2])
 				{
 					room->tiles[x][y].index = i;
+
+					std::cout << i << std::endl;
 				}
 			}
 		}
@@ -66,4 +70,18 @@ void room_load(room* room, const char* map, const char* lookup)
 	stbi_image_free(lookup_buffer);
 
 	stbi_image_free(map_buffer);
+}
+
+void room_draw(const room* room)
+{
+	for (int y = 0; y < ROOM_DIMENSION; y++)
+	{
+		for (int x = 0; x < ROOM_DIMENSION; x++)
+		{
+			if (room->tiles[x][y].index == 13)
+			{
+				graphics_tile_draw(&(room->tiles[x][y]), (float)x, (float)y);
+			}
+		}
+	}
 }

@@ -8,7 +8,7 @@ struct sprite_sheet
 	float data[SPRITE_SHEET_DIMENSION * SPRITE_DIMENSION * SPRITE_SHEET_DIMENSION * SPRITE_DIMENSION * 4];
 };
 
-void sprite_sheet_load(sprite_sheet* sheet, const char* sprites);
+extern void sprite_sheet_load(sprite_sheet* sheet, const char* sprites);
 
 struct tile
 {
@@ -24,4 +24,6 @@ struct room
 
 #define TILE_MAP_DIMENSION 16
 
-void room_load(room* room, const char* map, const char* lookup);
+extern void room_load(room* room, const char* map, const char* lookup);
+
+extern void room_draw(const room* room);

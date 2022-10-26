@@ -1,7 +1,7 @@
 #pragma once
 
-bool game_init();
+extern bool game_init();
 
-void game_run();
+extern void game_run();
 
-void game_clean_up();
+extern void game_clean_up();

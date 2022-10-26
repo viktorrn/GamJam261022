@@ -5,13 +5,25 @@
 #include <thread>
 
 #include "graphics.h"
+#include "tiles.h"
 
-bool s_running = false;
+#include "rect.h"
+
+static room s_room;
 
 bool game_init()
 {
-	return graphics_init();
+    if (!graphics_init())
+    {
+        return 0;
+    }
+
+    room_load(&s_room, "res/map.png", "res/lookup.png");
+
+    return 1;
 }
+
+bool s_running = false;
 
 void game_run()
 {
@@ -33,7 +45,7 @@ void game_run()
 
         graphics_prepare();
 
-        // TODO: Render stuff
+        room_draw(&s_room);
 
         graphics_present();
 
@@ -64,5 +76,5 @@ void game_run()
 
 void game_clean_up()
 {
-
+    graphics_clean_up();
 }
