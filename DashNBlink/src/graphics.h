@@ -1,9 +1,15 @@
 #pragma once
 
-bool graphics_init();
+#include "tiles.h"
 
-void graphics_prepare();
+extern bool graphics_init();
 
-void graphics_present();
+extern void graphics_prepare();
 
-bool graphics_window_closed();
+extern void graphics_present();
+
+extern void graphics_clean_up();
+
+extern bool graphics_window_closed();
+
+extern void graphics_tile_draw(const tile* t, float x, float y);
