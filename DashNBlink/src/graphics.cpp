@@ -53,7 +53,7 @@ bool graphics_init()
 
     rect_create(&s_rect);
 
-    sprite_sheet_create(&s_tile_sheet, "res/map.png");
+    sprite_sheet_create(&s_tile_sheet, "res/tile_sheet.png");
 
     return 1;
 }
@@ -95,7 +95,12 @@ void graphics_tile_draw(const tile* t, float x, float y)
     texture_bind(&(s_tile_sheet.tex), 0);
     shader_set_uniform1f(s_tile_uniform_tex, 0);
 
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     rect_draw(&s_rect);
+
+    glDisable(GL_BLEND);
 
     texture_unbind(0);
 
