@@ -23,4 +23,6 @@ extern void shader_set_uniform2f(unsigned int location, float x, float y);
 
 extern void shader_set_uniform3f(unsigned int location, float x, float y, float z);
 
+extern void shader_set_uniform2x2f(unsigned int location, float* data);
+
 extern void shader_destroy(shader* s);
