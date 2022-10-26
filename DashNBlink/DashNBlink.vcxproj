@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\graphics.h" />
+    <ClInclude Include="src\miniaudio.h" />
     <ClInclude Include="src\rect.h" />
     <ClInclude Include="src\shader.h" />
     <ClInclude Include="src\stb_image.h" />
