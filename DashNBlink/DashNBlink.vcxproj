@@ -140,9 +140,13 @@
     <ClCompile Include="src\entry.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\graphics.cpp" />
+    <ClCompile Include="src\keyboard.cpp" />
+    <ClCompile Include="src\mouse.cpp" />
     <ClCompile Include="src\player.cpp" />
+    <ClCompile Include="src\play_state.cpp" />
     <ClCompile Include="src\rect.cpp" />
     <ClCompile Include="src\shader.cpp" />
+    <ClCompile Include="src\start_state.cpp" />
     <ClCompile Include="src\stb_image.cpp" />
     <ClCompile Include="src\texture.cpp" />
     <ClCompile Include="src\tiles.cpp" />
@@ -150,10 +154,14 @@
   <ItemGroup>
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\graphics.h" />
+    <ClInclude Include="src\keyboard.h" />
     <ClInclude Include="src\miniaudio.h" />
+    <ClInclude Include="src\mouse.h" />
     <ClInclude Include="src\player.h" />
+    <ClInclude Include="src\play_state.h" />
     <ClInclude Include="src\rect.h" />
     <ClInclude Include="src\shader.h" />
+    <ClInclude Include="src\start_state.h" />
     <ClInclude Include="src\stb_image.h" />
     <ClInclude Include="src\texture.h" />
     <ClInclude Include="src\tiles.h" />

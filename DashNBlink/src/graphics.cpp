@@ -8,6 +8,9 @@
 #include "rect.h"
 #include "shader.h"
 
+#include "keyboard.h"
+#include "mouse.h"
+
 #define SCREEN_WIDTH 720
 #define SCREEN_HEIGHT 720
 
@@ -49,6 +52,9 @@ bool graphics_init()
     }
 
     std::cout << glGetString(GL_VERSION) << std::endl;
+
+    keyboard_init(s_window);
+    mouse_init(s_window);
 
     glClearColor(43.0f / 255.0f, 15.0f / 255.0f, 84.0f / 255.0f, 1.0f);
     glDisable(GL_DEPTH_TEST);
