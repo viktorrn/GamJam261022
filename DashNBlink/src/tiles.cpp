@@ -55,7 +55,7 @@ void room_load(room* room, const char* map, const char* lookup)
 	{
 		for (int x = 0; x < map_width; x++)
 		{
-			for (int i = 0; i < lookup_width; i++)
+			for (int i = lookup_width * lookup_height - 1; i > -1; i--)
 			{
 				if (lookup_buffer[i * 3] == map_buffer[(y * map_width + x) * 3] &&
 					lookup_buffer[i * 3 + 1] == map_buffer[(y * map_width + x) * 3 + 1] && 
