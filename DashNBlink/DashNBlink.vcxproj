@@ -137,10 +137,14 @@
     <ClCompile Include="src\entry.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\graphics.cpp" />
+    <ClCompile Include="src\stb_image.cpp" />
+    <ClCompile Include="src\tiles.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\graphics.h" />
+    <ClInclude Include="src\stb_image.h" />
+    <ClInclude Include="src\tiles.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

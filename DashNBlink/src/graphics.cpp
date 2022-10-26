@@ -32,14 +32,14 @@ bool graphics_init()
 
     std::cout << glGetString(GL_VERSION) << std::endl;
 
-    glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
+    glClearColor(43.0f / 255.0f, 15.0f / 255.0f, 84.0f / 255.0f, 1.0f);
 
     return 1;
 }
 
 void graphics_prepare()
 {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void graphics_present()
