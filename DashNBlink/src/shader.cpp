@@ -113,6 +113,11 @@ void shader_set_uniform3f(unsigned int location, float x, float y, float z)
     glUniform3f(location, x, y, z);
 }
 
+void shader_set_uniform2x2f(unsigned int location, float* data)
+{
+    glUniformMatrix2fv(location, 1, GL_FALSE, data);
+}
+
 void shader_destroy(shader* s)
 {
     glUseProgram(0);

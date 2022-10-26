@@ -62,6 +62,8 @@ void room_load(room* room, const char* map, const char* lookup)
 					lookup_buffer[i * 3 + 2] == map_buffer[(y * map_width + x) * 3 + 2])
 				{
 					room->tiles[x][y].index = i;
+
+					//std::cout << i << std::endl;
 				}
 			}
 		}

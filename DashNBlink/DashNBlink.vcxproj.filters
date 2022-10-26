@@ -57,6 +57,9 @@
     <ClCompile Include="src\texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game.h">
@@ -82,9 +85,12 @@
     </ClInclude>
     <ClInclude Include="src\miniaudio.h">
       <Filter>Header Files\Vendor</Filter>
+    <ClInclude Include="src\player.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\tile.shader" />
+    <None Include="res\shaders\player.shader" />
   </ItemGroup>
 </Project>

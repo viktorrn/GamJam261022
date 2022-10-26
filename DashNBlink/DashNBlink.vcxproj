@@ -140,6 +140,7 @@
     <ClCompile Include="src\entry.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\graphics.cpp" />
+    <ClCompile Include="src\player.cpp" />
     <ClCompile Include="src\rect.cpp" />
     <ClCompile Include="src\shader.cpp" />
     <ClCompile Include="src\stb_image.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\graphics.h" />
     <ClInclude Include="src\miniaudio.h" />
+    <ClInclude Include="src\player.h" />
     <ClInclude Include="src\rect.h" />
     <ClInclude Include="src\shader.h" />
     <ClInclude Include="src\stb_image.h" />
@@ -157,6 +159,7 @@
     <ClInclude Include="src\tiles.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\shaders\player.shader" />
     <None Include="res\shaders\tile.shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

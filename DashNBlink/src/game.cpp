@@ -6,10 +6,10 @@
 
 #include "graphics.h"
 #include "tiles.h"
-
-#include "rect.h"
+#include "player.h"
 
 static room s_room;
+static player s_player;
 
 bool game_init()
 {
@@ -19,6 +19,7 @@ bool game_init()
     }
 
     room_load(&s_room, "res/map.png", "res/lookup.png");
+    player_load(&s_player, &s_room, 0);
 
     return 1;
 }
@@ -43,11 +44,8 @@ void game_run(ma_engine* engine)
     {
         last_frame = std::chrono::system_clock::now();
 
-        graphics_prepare();
-
-        room_draw(&s_room);
-
-        graphics_present();
+        game_tick();
+        game_draw();
 
         frames++;
 
@@ -73,6 +71,21 @@ void game_run(ma_engine* engine)
         }
  
     }
+}
+
+void game_tick()
+{
+    player_tick(&s_player);
+}
+
+void game_draw()
+{
+    graphics_prepare();
+
+    room_draw(&s_room);
+    player_draw(&s_player);
+
+    graphics_present();
 }
 
 void game_clean_up()
