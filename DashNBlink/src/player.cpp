@@ -108,6 +108,7 @@ void player_tick(player* p, float deltaT, room* r, ma_engine *engine)
 			else if (index != 12 && index != 14)
 			{
 				p->dead = true;
+				
 				play_sound(2, engine);
 			}
 			else
