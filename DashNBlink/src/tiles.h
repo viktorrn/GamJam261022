@@ -38,6 +38,10 @@ struct room
 	const char* lookup;
 	int index;
 	std::vector<std::vector<room_change>> steps;
+	float shake_x;
+	float shake_y;
+	bool shaking_x;
+	bool shaking_y;
 };
 
 #define TILE_MAP_DIMENSION 16
@@ -46,6 +50,8 @@ extern void room_load(room* room, const char* map, const char* lookup, int index
 
 extern void room_load_next(room* room);
 
+extern void room_tick(room* room, float delta);
+
 extern void room_draw(const room* room);
 
 extern void room_remove_platform(room* room, float x, float y, bool start);
@@ -53,3 +59,7 @@ extern void room_remove_platform(room* room, float x, float y, bool start);
 extern bool room_revert_last(room* room);
 
 extern void room_revert_all(room* room);
+
+extern void room_shake_x(room* room);
+
+extern void room_shake_y(room* room);

@@ -29,8 +29,6 @@ struct audioElement
 
 vector<audioElement>audioVector;
 
-
-
 void play_state_init(ma_engine* engine)
 {
 	ma_result result;
@@ -185,7 +183,16 @@ void play_state_run()
 
 void play_state_tick(float DeltaT, ma_engine *engine)
 {
-	if (keyboard_is_pressed(GLFW_KEY_R))
+	if (keyboard_is_pressed(GLFW_KEY_ESCAPE))
+	{
+		keyboard_state_set(GLFW_KEY_ESCAPE, false);
+
+		ma_sound_stop(&s_theme);
+		game_state_set(START);
+		return;
+	}
+
+	else if (keyboard_is_pressed(GLFW_KEY_R))
 	{
 		room_revert_all(&s_room);
 		player_load(&s_player, &s_room, 0);
@@ -215,6 +222,7 @@ void play_state_tick(float DeltaT, ma_engine *engine)
 	}
 
 	player_tick(&s_player, DeltaT, &s_room, engine);
+	room_tick(&s_room, DeltaT);
 
 	for ( int i = 0; i < audioVector.size(); i++)
 	{

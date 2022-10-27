@@ -27,6 +27,13 @@ static float s_opacity = 0.0f;
 
 void start_state_tick()
 {
+	if (keyboard_is_pressed(GLFW_KEY_ESCAPE))
+	{
+		ma_sound_stop(&s_theme);
+		game_close();
+		return;
+	}
+
 	s_offset += 0.2f;
 
 	if (s_offset < 20.0f)
@@ -46,7 +53,8 @@ void start_state_tick()
 
 	if (keyboard_is_pressed(GLFW_KEY_SPACE))
 	{
-		s_offset = 0;
+		s_offset = 0.0f;
+		s_opacity = 0.0f;
 		ma_sound_stop(&s_theme);
 		game_state_set(PLAY);
 	}

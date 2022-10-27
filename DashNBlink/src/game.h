@@ -16,3 +16,5 @@ extern void game_draw();
 extern void game_clean_up();
 
 extern void game_state_set(state new_state);
+
+extern void game_close();

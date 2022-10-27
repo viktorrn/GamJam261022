@@ -130,13 +130,44 @@ void room_load_next(room* room)
 	room_load(room, map, lookup, new_index);
 }
 
+void room_tick(room* room, float delta)
+{
+	if (room->shaking_x)
+	{
+		if (room->shake_x < 2.0f * 3.1415f)
+		{
+			room->shake_x += 0.8f;
+		}
+
+		else
+		{
+			room->shake_x = 0.0f;
+			room->shaking_x = false;
+		}
+	}
+
+	if (room->shaking_y)
+	{
+		if (room->shake_y < 2.0f * 3.1415f)
+		{
+			room->shake_y += 0.8f;
+		}
+
+		else
+		{
+			room->shake_y = 0.0f;
+			room->shaking_y = false;
+		}
+	}
+}
+
 void room_draw(const room* room)
 {
 	for (int y = 0; y < ROOM_DIMENSION; y++)
 	{
 		for (int x = 0; x < ROOM_DIMENSION; x++)
 		{
-			graphics_tile_draw(&(room->tiles[x][y]), (float)x, (float)y);
+			graphics_tile_draw(&(room->tiles[x][y]), (float)x + sinf(room->shake_x) * 0.15f, (float)y + sinf(room->shake_y) * 0.15f);
 		}
 	}
 }
@@ -197,4 +228,14 @@ void room_revert_all(room* room)
 	{
 		removed = room_revert_last(room);
 	}
+}
+
+void room_shake_x(room* room)
+{
+	room->shaking_x = true;
+}
+
+void room_shake_y(room* room)
+{
+	room->shaking_y = true;
 }

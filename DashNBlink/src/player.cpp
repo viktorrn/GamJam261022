@@ -67,7 +67,7 @@ tile getTileAt(vec2* vec, const room* r);
 void player_tick(player* p, float deltaT, room* r, ma_engine *engine)
 {
 	float px(0); float py(0);
-	float duration = 0.35f;
+	float duration = 0.25f;
 
 	if (p->moving)
 	{
@@ -85,9 +85,9 @@ void player_tick(player* p, float deltaT, room* r, ma_engine *engine)
 		p->position.y = p->target.y + ((p->oldPosition.y - p->target.y) * tp);
 
 		if(abs(p->moveDirection.x)) 
-			p->rotation = 2 * PI * tr * -p->moveDirection.x;
+			p->rotation = PI * tr * -p->moveDirection.x;
 		else if(abs(p->moveDirection.y)) 
-			p->rotation = 2 * PI * tr * -p->moveDirection.y;
+			p->rotation = PI * tr * -p->moveDirection.y;
 			
 
 		if (abs(p->position.x - p->target.x) < 0.001 && abs(p->position.y - p->target.y) < 0.001)
@@ -115,6 +115,16 @@ void player_tick(player* p, float deltaT, room* r, ma_engine *engine)
 			{
 				play_sound(3, engine);
 			}
+
+			if (abs(p->moveDirection.x) == 1.0f)
+			{
+				room_shake_x(r);
+			}
+
+			else
+			{
+				room_shake_y(r);
+			}
 		}
 	}
 
@@ -123,6 +133,7 @@ void player_tick(player* p, float deltaT, room* r, ma_engine *engine)
 		if (p->steps.size() != 0)
 		{
 			p->moving = true;
+			std::cout << "Reverting" << std::endl;
 			p->target = p->steps[p->steps.size() - 1];
 			p->steps.pop_back();
 		}
@@ -179,7 +190,6 @@ void player_tick(player* p, float deltaT, room* r, ma_engine *engine)
 					subVec2(&calcPosition, &moveDirection);
 				}
 
-				if ( (p->position.x - calcPosition.x ))
 				p->steps.push_back(p->position);
 				
 				
