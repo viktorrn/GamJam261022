@@ -1,6 +1,7 @@
 #include "tiles.h"
 
 #include <iostream>
+#include <sstream>
 
 #include "stb_image.h"
 
@@ -31,12 +32,17 @@ extern void sprite_sheet_destroy(sprite_sheet* sheet)
 	texture_destroy(&(sheet->tex));
 }
 
-void room_load(room* room, const char* map, const char* lookup)
+void room_load(room* room, const char* map, const char* lookup, int index)
 {
+	std::stringstream map_path;
+	map_path << map;
+	map_path << index;
+	map_path << ".png";
+
 	stbi_set_flip_vertically_on_load(1);
 
 	int map_width, map_height, bpp;
-	unsigned char* map_buffer = stbi_load(map, &map_width, &map_height, &bpp, 3);
+	unsigned char* map_buffer = stbi_load(map_path.str().c_str(), &map_width, &map_height, &bpp, 3);
 
 	if (map_buffer == nullptr)
 	{
@@ -79,6 +85,12 @@ void room_load(room* room, const char* map, const char* lookup)
 					int lookup_y = i / 16;
 
 					vec2 v{ 1,0 };
+
+					if (lookup_y == 0)
+					{
+						v.x = 0;
+					}
+
 					vec2 v2{ 0,0 };
 					rotateVec2(&v, &v2, angles[startAngle[lookup_y] % 8]);
 
@@ -95,6 +107,18 @@ void room_load(room* room, const char* map, const char* lookup)
 	stbi_image_free(lookup_buffer);
 
 	stbi_image_free(map_buffer);
+
+	room->map = map;
+	room->lookup = lookup;
+	room->index = index;
+}
+
+void room_load_next(room* room)
+{
+	int new_index = room->index + 1;
+	const char* map = room->map;
+	const char* lookup = room->lookup;
+	room_load(room, map, lookup, new_index);
 }
 
 void room_draw(const room* room)

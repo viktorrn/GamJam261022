@@ -22,7 +22,7 @@ void start_state_run()
 	ma_sound_set_looping(&s_theme, MA_TRUE);
 }
 
-void start_state_tick(float DeltaT)
+void start_state_tick()
 {
 	if (keyboard_is_pressed(GLFW_KEY_SPACE))
 	{
