@@ -167,7 +167,7 @@ void player_tick(player* p, float deltaT, room* r, ma_engine *engine)
 		}
 
 		if (moveDirection.x == 0 && moveDirection.y == 0) return;
-		p->moving = true;
+		
 
 		//std::cout << "move requested " << moveDirection.x << " , " << moveDirection.y << std::endl;
 
@@ -190,9 +190,10 @@ void player_tick(player* p, float deltaT, room* r, ma_engine *engine)
 					subVec2(&calcPosition, &moveDirection);
 				}
 
+				if ( calcDistance(&p->position,&calcPosition) < 0.9 )break;
 				p->steps.push_back(p->position);
 				
-				
+				p->moving = true;
 				p->target = calcPosition;
 				p->moveDirection = moveDirection;
 
@@ -206,6 +207,7 @@ void player_tick(player* p, float deltaT, room* r, ma_engine *engine)
 
 			if (!checkInBounds(&calcPosition))
 			{
+
 				p->target = p->position;
 				break;
 
@@ -236,5 +238,6 @@ bool checkInBounds(vec2* vec)
 
 void player_draw(const player* p)
 {
+	cout << " player coords " << p->position.x << " , " << p->position.y << endl;
 	graphics_player_draw(p);
 }
