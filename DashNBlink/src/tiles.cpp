@@ -9,6 +9,8 @@
 
 #define PI 3.141592
 
+using namespace std;
+
 void sprite_sheet_create(sprite_sheet* sheet, const char* sprites)
 {
 	stbi_set_flip_vertically_on_load(1);
@@ -84,6 +86,9 @@ void room_load(room* room, const char* map, const char* lookup, int index)
 					int lookup_x = i % 16;
 					int lookup_y = i / 16;
 
+
+					//std::cout << ""
+
 					vec2 v{ 1,0 };
 
 					if (lookup_y == 0)
@@ -96,6 +101,7 @@ void room_load(room* room, const char* map, const char* lookup, int index)
 
 					vec2 v3{ 0,0 };
 					rotateVec2(&v2, &v3, 2 * angles[lookup_x /4]);
+
 					room->tiles[x][y].index = i;
 					
 					room->tiles[x][y].facing = v3;
