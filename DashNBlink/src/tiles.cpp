@@ -1,6 +1,7 @@
 #include "tiles.h"
 
 #include <iostream>
+#include <sstream>
 
 #include "stb_image.h"
 
@@ -33,12 +34,17 @@ extern void sprite_sheet_destroy(sprite_sheet* sheet)
 	texture_destroy(&(sheet->tex));
 }
 
-void room_load(room* room, const char* map, const char* lookup)
+void room_load(room* room, const char* map, const char* lookup, int index)
 {
+	std::stringstream map_path;
+	map_path << map;
+	map_path << index;
+	map_path << ".png";
+
 	stbi_set_flip_vertically_on_load(1);
 
 	int map_width, map_height, bpp;
-	unsigned char* map_buffer = stbi_load(map, &map_width, &map_height, &bpp, 3);
+	unsigned char* map_buffer = stbi_load(map_path.str().c_str(), &map_width, &map_height, &bpp, 3);
 
 	if (map_buffer == nullptr)
 	{
@@ -71,28 +77,36 @@ void room_load(room* room, const char* map, const char* lookup)
 	{
 		for (int x = 0; x < map_width; x++)
 		{
-
 			for (int i = lookup_width * lookup_height - 1; i > -1; i--)
 			{
 				if (lookup_buffer[i * 3] == map_buffer[(y * map_width + x) * 3] &&
 					lookup_buffer[i * 3 + 1] == map_buffer[(y * map_width + x) * 3 + 1] && 
 					lookup_buffer[i * 3 + 2] == map_buffer[(y * map_width + x) * 3 + 2])
 				{
-					
-					vec2 v{1,0};
-					vec2 v2{ 0,0 };
-					vec2 v3{ 0,0 };
-					rotateVec2(&v, &v2, angles[startAngle[y]%8]);
+					int lookup_x = i % 16;
+					int lookup_y = i / 16;
 
+<<<<<<< HEAD
 					//std::cout << ""
 
 					rotateVec2(&v2, &v3, 2 * angles[x/4]);
+=======
+					vec2 v{ 1,0 };
+
+					if (lookup_y == 0)
+					{
+						v.x = 0;
+					}
+
+					vec2 v2{ 0,0 };
+					rotateVec2(&v, &v2, angles[startAngle[lookup_y] % 8]);
+
+					vec2 v3{ 0,0 };
+					rotateVec2(&v2, &v3, 2 * angles[lookup_x /4]);
+>>>>>>> 4f74a29c1f61ec5e5940d092af2ed86efdfb8234
 					room->tiles[x][y].index = i;
 					
 					room->tiles[x][y].facing = v3;
-					
-
-					//std::cout << i << std::endl;
 				}
 			}
 		}
@@ -101,6 +115,18 @@ void room_load(room* room, const char* map, const char* lookup)
 	stbi_image_free(lookup_buffer);
 
 	stbi_image_free(map_buffer);
+
+	room->map = map;
+	room->lookup = lookup;
+	room->index = index;
+}
+
+void room_load_next(room* room)
+{
+	int new_index = room->index + 1;
+	const char* map = room->map;
+	const char* lookup = room->lookup;
+	room_load(room, map, lookup, new_index);
 }
 
 void room_draw(const room* room)
@@ -111,5 +137,63 @@ void room_draw(const room* room)
 		{
 			graphics_tile_draw(&(room->tiles[x][y]), (float)x, (float)y);
 		}
+	}
+}
+
+void room_remove_platform(room* room, float x, float y, bool start)
+{
+	if (start)
+	{
+		room->steps.push_back(std::vector<room_change>());
+	}
+
+	int center_x = (int)(x + 0.5f);
+	int center_y = (int)(y + 0.5f);
+
+	for (int i = -1; i < 2; i++)
+	{
+		for (int j = -1; j < 2; j++)
+		{
+			if (room->tiles[center_x + i][center_y + j].index != 12)
+			{
+				room_change ch;
+				ch.prev_index = room->tiles[center_x + i][center_y + j].index;
+				ch.x = center_x + i;
+				ch.y = center_y + j;
+				room->steps[room->steps.size() - 1].push_back(ch);
+
+				room->tiles[center_x + i][center_y + j].index = 12;
+
+				room_remove_platform(room, (float)(center_x + i), (float)(center_y + j), false);
+			}
+		}
+	}
+}
+
+bool room_revert_last(room* room)
+{
+	if (room->steps.size() != 0)
+	{
+		for (int i = 0; i < room->steps[room->steps.size() - 1].size(); i++)
+		{
+			room_change ch = room->steps[room->steps.size() - 1][i];
+			room->tiles[ch.x][ch.y].index = ch.prev_index;
+		}
+
+		room->steps.pop_back();
+
+		return true;
+	}
+
+	return false;
+}
+
+void room_revert_all(room* room)
+{
+	bool removed = room_revert_last(room);
+
+	while (removed)
+	{
+		removed = room_revert_last(room);
 	}
 }

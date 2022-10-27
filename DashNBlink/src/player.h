@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 #include "tiles.h"
 #include "struct.h"
 
@@ -14,10 +16,14 @@ struct player
 	float rotation;
 	int character;
 	float flightTime;
+	bool dead;
+	bool done;
+
+	std::vector<vec2> steps;
 };
 
 extern void player_load(player* p, const room* r, int character);
 
-extern void player_tick(player* p, float deltaT, const room* r);
+extern void player_tick(player* p, float deltaT, room* r);
 
 extern void player_draw(const player* p);

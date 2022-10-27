@@ -53,26 +53,19 @@ void player_load(player* p, const room* r, int character)
 	p->position.y = 1.0f;
 	p->character = 240 + character;
 	p->rotation = 0.0f;
-
-
-	//std::cout << "Player entry point not found, created at: [1, 1]" << std::endl;
+	p->dead = false;
+	p->done = false;
+	p->steps = std::vector<vec2>();
 }
 
 bool checkTileContentsEmpty(vec2* vec, const room* r);
 bool checkInBounds(vec2* vec);
 tile getTileAt(vec2* vec, const room* r);
 
-void player_tick(player* p, float deltaT, const room* r)
+void player_tick(player* p, float deltaT, room* r)
 {
-	
-	
 	float px(0); float py(0);
 	float duration = 0.35f;
-	
-	if (keyboard_is_pressed(GLFW_KEY_R))
-	{
-		player_load(p, r, p->character-240);
-	}
 
 	if (p->moving)
 	{
@@ -100,8 +93,34 @@ void player_tick(player* p, float deltaT, const room* r)
 			p->moving = false;
 			p->flightTime = 0;
 			p->oldPosition = p->target;
+
+			int index = getTileAt(&(p->position), r).index;
+			
+			if (index == 15)
+			{
+				std::cout << "Win!!!" << std::endl;
+				p->done = true;
+			}
+			
+			else if (index != 12 && index != 14)
+			{
+				p->dead = true;
+			}
 		}
 	}
+
+	else if (keyboard_is_pressed(GLFW_KEY_SPACE))
+	{
+		if (p->steps.size() != 0)
+		{
+			p->moving = true;
+			p->target = p->steps[p->steps.size() - 1];
+			p->steps.pop_back();
+		}
+
+		room_revert_last(r);
+	}
+
 	else
 	{
 		vec2 moveDirection{0,0};
@@ -144,9 +163,15 @@ void player_tick(player* p, float deltaT, const room* r)
 			if (!checkTileContentsEmpty(&calcPosition, r))
 			{
 				tile tile = getTileAt(&calcPosition,r);
-				cout << "tile facing data " << tile.facing.x << " , " << tile.facing.y << endl;
+				//cout << "tile facing data " << tile.facing.x << " , " << tile.facing.y << endl;
 
-				subVec2(&calcPosition, &moveDirection);
+				if (calcDotProductVec2(moveDirection, tile.facing) < 0)
+				{
+					subVec2(&calcPosition, &moveDirection);
+				}
+
+				p->steps.push_back(p->position);
+				room_remove_platform(r, p->position.x, p->position.y, true);
 				p->target = calcPosition;
 				p->moveDirection = moveDirection;
 				break;
