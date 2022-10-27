@@ -89,6 +89,7 @@ void room_load(room* room, const char* map, const char* lookup, int index)
 
 					//std::cout << ""
 
+
 					vec2 v{ 1,0 };
 
 					if (lookup_y == 0)
@@ -101,6 +102,7 @@ void room_load(room* room, const char* map, const char* lookup, int index)
 
 					vec2 v3{ 0,0 };
 					rotateVec2(&v2, &v3, 2 * angles[lookup_x /4]);
+ 
 
 					room->tiles[x][y].index = i;
 					
