@@ -65,7 +65,7 @@ void play_state_init(ma_engine* engine)
 		return;
 	}
 
-	result = ma_sound_init_from_file(engine, "./res/audio/pdnu.mp3", 0, NULL, NULL, &ps_leave);
+	result = ma_sound_init_from_file(engine, "./res/audio/player_leave_platform.mp3", 0, NULL, NULL, &ps_leave);
 	if (result != MA_SUCCESS) {
 		cout << "leave platform sound not found " << endl;
 		return;
@@ -104,16 +104,16 @@ void play_sound(int soundIndex,ma_engine* engine)
 		ma_sound_start(&ps_leaveRoom);
 		break;
 	case 2:
-		ma_sound_set_volume(&ps_death, 3.0f);
+		ma_sound_set_volume(&ps_death, 5.0f);
 		ma_sound_seek_to_pcm_frame(&ps_death, 0);
 		ma_sound_start(&ps_death);
 		break;
 	case 3:
-		ma_sound_set_volume(&ps_land, 2.5f);
+		ma_sound_set_volume(&ps_land, 5.0f);
 		ma_sound_seek_to_pcm_frame(&ps_land, 0);
 		ma_sound_start(&ps_land);
 	case 4:
-		ma_sound_set_volume(&ps_leave, 2.5f);
+		ma_sound_set_volume(&ps_leave, 5.5f);
 		ma_sound_seek_to_pcm_frame(&ps_leave, 0);
 		ma_sound_start(&ps_leave);
 		break;
