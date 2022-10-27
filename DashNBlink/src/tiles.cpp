@@ -123,6 +123,7 @@ void room_load(room* room, const char* map, const char* lookup, int index)
 
 void room_load_next(room* room)
 {
+	room->steps = std::vector<std::vector<room_change>>();
 	int new_index = room->index + 1;
 	const char* map = room->map;
 	const char* lookup = room->lookup;
