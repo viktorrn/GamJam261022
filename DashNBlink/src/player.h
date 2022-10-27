@@ -14,6 +14,8 @@ struct player
 	float rotation;
 	int character;
 	float flightTime;
+	bool dead;
+	bool done;
 };
 
 extern void player_load(player* p, const room* r, int character);

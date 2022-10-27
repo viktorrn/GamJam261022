@@ -69,26 +69,24 @@ void room_load(room* room, const char* map, const char* lookup)
 	{
 		for (int x = 0; x < map_width; x++)
 		{
-
 			for (int i = lookup_width * lookup_height - 1; i > -1; i--)
 			{
 				if (lookup_buffer[i * 3] == map_buffer[(y * map_width + x) * 3] &&
 					lookup_buffer[i * 3 + 1] == map_buffer[(y * map_width + x) * 3 + 1] && 
 					lookup_buffer[i * 3 + 2] == map_buffer[(y * map_width + x) * 3 + 2])
 				{
-					
-					vec2 v{1,0};
-					vec2 v2{ 0,0 };
-					vec2 v3{ 0,0 };
-					rotateVec2(&v, &v2, angles[startAngle[y]%8]);
+					int lookup_x = i % 16;
+					int lookup_y = i / 16;
 
-					rotateVec2(&v2, &v3, 2 * angles[x/4]);
+					vec2 v{ 1,0 };
+					vec2 v2{ 0,0 };
+					rotateVec2(&v, &v2, angles[startAngle[lookup_y] % 8]);
+
+					vec2 v3{ 0,0 };
+					rotateVec2(&v2, &v3, 2 * angles[lookup_x /4]);
 					room->tiles[x][y].index = i;
 					
 					room->tiles[x][y].facing = v3;
-					
-
-					//std::cout << i << std::endl;
 				}
 			}
 		}
