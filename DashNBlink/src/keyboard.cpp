@@ -14,7 +14,8 @@ bool keyboard_is_pressed(int key)
 
 void keyboard_state_set(int key, bool state)
 {
-	s_data.keys[key] = state;
+	if(key < 2048)
+		s_data.keys[key] = state;
 }
 
 void keyboard_callback(GLFWwindow* window, int key, int scancode, int action, int mods)

@@ -27,8 +27,6 @@ void data_callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uin
     // frameCount frames.
 }
 
-static room s_room;
-static player s_player;
 static float DeltaT = 0;
 
 bool game_init()
@@ -94,8 +92,6 @@ void game_run()
 {
     int frames = 0;
     double delta_time = 1000.0 / 90.0;
-    
-
    
     std::chrono::system_clock::time_point last_frame = std::chrono::system_clock::now();
     std::chrono::duration<double, std::milli> work_time;
@@ -147,13 +143,12 @@ void game_tick()
     switch (s_current_state)
     {
     case START:
-        start_state_tick(DeltaT);
+        start_state_tick();
         break;
     case PLAY:
         play_state_tick(DeltaT);
         break;
     }
-    player_tick(&s_player, DeltaT);
 }
 
 void game_draw()

@@ -25,10 +25,15 @@ struct tile
 struct room
 {
 	tile tiles[ROOM_DIMENSION][ROOM_DIMENSION];
+	const char* map;
+	const char* lookup;
+	int index;
 };
 
 #define TILE_MAP_DIMENSION 16
 
-extern void room_load(room* room, const char* map, const char* lookup);
+extern void room_load(room* room, const char* map, const char* lookup, int index);
+
+extern void room_load_next(room* room);
 
 extern void room_draw(const room* room);
