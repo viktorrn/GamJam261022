@@ -1,0 +1,10 @@
+Sounds effects needed
+
+Dashing sound
+-Leaving platform
+-Landing on playform
+Level enter
+Level leave
+
+-Death sound
+Rewind dash sound
