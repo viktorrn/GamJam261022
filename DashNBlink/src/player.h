@@ -2,6 +2,7 @@
 
 #include <vector>
 
+#include "miniaudio.h"
 #include "tiles.h"
 #include "struct.h"
 
@@ -24,6 +25,6 @@ struct player
 
 extern void player_load(player* p, const room* r, int character);
 
-extern void player_tick(player* p, float deltaT, room* r);
+extern void player_tick(player* p, float deltaT, room* r, ma_engine*engine);
 
 extern void player_draw(const player* p);

@@ -20,6 +20,8 @@ static ma_device_config s_config;
 static ma_context s_context;
 static ma_device s_device;
 
+
+
 void data_callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uint32 frameCount)
 {
     // In playback mode copy data to pOutput. In capture mode read data from pInput. In full-duplex mode, both
@@ -146,7 +148,7 @@ void game_tick()
         start_state_tick();
         break;
     case PLAY:
-        play_state_tick(DeltaT);
+        play_state_tick(DeltaT, &s_engine);
         break;
     }
 }

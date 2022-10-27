@@ -4,6 +4,8 @@
 #include "keyboard.h"
 #include "graphics.h"
 #include "tiles.h"
+#include "play_state.h"
+
 #define PI 3.141592
 
 using namespace std;
@@ -62,7 +64,7 @@ bool checkTileContentsEmpty(vec2* vec, const room* r);
 bool checkInBounds(vec2* vec);
 tile getTileAt(vec2* vec, const room* r);
 
-void player_tick(player* p, float deltaT, room* r)
+void player_tick(player* p, float deltaT, room* r, ma_engine *engine)
 {
 	float px(0); float py(0);
 	float duration = 0.35f;
@@ -100,11 +102,17 @@ void player_tick(player* p, float deltaT, room* r)
 			{
 				std::cout << "Win!!!" << std::endl;
 				p->done = true;
+				play_sound(1, engine);
 			}
 			
 			else if (index != 12 && index != 14)
 			{
 				p->dead = true;
+				play_sound(2, engine);
+			}
+			else
+			{
+				play_sound(3, engine);
 			}
 		}
 	}
@@ -170,10 +178,18 @@ void player_tick(player* p, float deltaT, room* r)
 					subVec2(&calcPosition, &moveDirection);
 				}
 
+				if ( (p->position.x - calcPosition.x ))
 				p->steps.push_back(p->position);
-				room_remove_platform(r, p->position.x, p->position.y, true);
+				
+				
 				p->target = calcPosition;
 				p->moveDirection = moveDirection;
+
+				room_remove_platform(r, p->position.x, p->position.y, true);
+				
+				play_sound(4,engine);
+		
+
 				break;
 			}
 
