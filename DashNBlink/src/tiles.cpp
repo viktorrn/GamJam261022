@@ -63,8 +63,8 @@ void room_load(room* room, const char* map, const char* lookup, int index)
 
 	int startAngle[16] =
 	{
-		0, 0, 0, 0, 0, 0, 0 ,0,
-		4, 4, 1, 1, 1, 7, 0, 0, 
+		0, 0, 0, 0, 0, 0, 0, 4, 
+		4, 0, 1, 1, 1, 7, 0, 0, 
 	};
 
 	float angles[8] =
@@ -182,21 +182,23 @@ void room_remove_platform(room* room, float x, float y, bool start)
 	int center_x = (int)(x + 0.5f);
 	int center_y = (int)(y + 0.5f);
 
+
 	for (int i = -1; i < 2; i++)
 	{
 		for (int j = -1; j < 2; j++)
 		{
-			if (room->tiles[center_x + i][center_y + j].index != 12)
-			{
-				room_change ch;
-				ch.prev_index = room->tiles[center_x + i][center_y + j].index;
-				ch.x = center_x + i;
-				ch.y = center_y + j;
-				room->steps[room->steps.size() - 1].push_back(ch);
+			if (i * j == 0)
+				if (room->tiles[center_x + i][center_y + j].index >= (16*8)) 
+				{
+					room_change ch;
+					ch.prev_index = room->tiles[center_x + i][center_y + j].index;
+					ch.x = center_x + i;
+					ch.y = center_y + j;
+					room->steps[room->steps.size() - 1].push_back(ch);
 
-				room->tiles[center_x + i][center_y + j].index = 12;
+					room->tiles[center_x + i][center_y + j].index = 12;
 
-				room_remove_platform(room, (float)(center_x + i), (float)(center_y + j), false);
+					room_remove_platform(room, (float)(center_x + i), (float)(center_y + j), false);
 			}
 		}
 	}

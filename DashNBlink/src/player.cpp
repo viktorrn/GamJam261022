@@ -50,7 +50,7 @@ void player_load(player* p, const room* r, int character)
 	p->moveDirection.x = startIndex_y - entryIndex_y;
 
 	p->flightTime = 0;
-	std::cout << "Player created at: [" << entryIndex_x << ", " << entryIndex_y << "]" << std::endl;
+	//std::cout << "Player created at: [" << entryIndex_x << ", " << entryIndex_y << "]" << std::endl;
 	p->position.x = 1.0f;
 	p->position.y = 1.0f;
 	p->character = 240 + character;
@@ -185,7 +185,8 @@ void player_tick(player* p, float deltaT, room* r, ma_engine *engine)
 				tile tile = getTileAt(&calcPosition,r);
 				//cout << "tile facing data " << tile.facing.x << " , " << tile.facing.y << endl;
 
-				if (calcDotProductVec2(moveDirection, tile.facing) < 0)
+				cout << "dot product of landing " << calcDotProductVec2(moveDirection, tile.facing) << endl;
+				if (calcDotProductVec2(moveDirection, tile.facing) < -0.5)
 				{
 					subVec2(&calcPosition, &moveDirection);
 				}
@@ -238,6 +239,6 @@ bool checkInBounds(vec2* vec)
 
 void player_draw(const player* p)
 {
-	cout << " player coords " << p->position.x << " , " << p->position.y << endl;
+	//cout << " player coords " << p->position.x << " , " << p->position.y << endl;
 	graphics_player_draw(p);
 }
