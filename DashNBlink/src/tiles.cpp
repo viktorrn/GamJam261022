@@ -8,6 +8,8 @@
 
 #define PI 3.141592
 
+using namespace std;
+
 void sprite_sheet_create(sprite_sheet* sheet, const char* sprites)
 {
 	stbi_set_flip_vertically_on_load(1);
@@ -81,6 +83,8 @@ void room_load(room* room, const char* map, const char* lookup)
 					vec2 v2{ 0,0 };
 					vec2 v3{ 0,0 };
 					rotateVec2(&v, &v2, angles[startAngle[y]%8]);
+
+					//std::cout << ""
 
 					rotateVec2(&v2, &v3, 2 * angles[x/4]);
 					room->tiles[x][y].index = i;
