@@ -227,5 +227,6 @@ bool checkInBounds(vec2* vec)
 
 void player_draw(const player* p)
 {
+	cout << " player coords " << p->position.x << " , " << p->position.y << endl;
 	graphics_player_draw(p);
 }
