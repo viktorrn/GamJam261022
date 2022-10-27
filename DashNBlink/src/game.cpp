@@ -191,3 +191,8 @@ void game_state_set(state new_state)
         break;
     }
 }
+
+void game_close()
+{
+    s_running = false;
+}
