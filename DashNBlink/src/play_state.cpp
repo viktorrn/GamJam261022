@@ -4,6 +4,7 @@
 #include "tiles.h"
 #include "player.h"
 #include "game.h"
+#include "keyboard.h"
 
 static room s_room;
 static player s_player;
@@ -30,6 +31,12 @@ void play_state_run()
 
 void play_state_tick(float DeltaT)
 {
+	if (keyboard_is_pressed(GLFW_KEY_R))
+	{
+		room_revert_all(&s_room);
+		player_load(&s_player, &s_room, 0);
+	}
+
 	if (s_player.done)
 	{
 		int last_index = s_room.index;
