@@ -56,8 +56,8 @@ void play_state_tick(float DeltaT)
 
 	else if (s_player.dead)
 	{
-		ma_sound_stop(&s_theme);
-		game_state_set(START);
+		room_revert_all(&s_room);
+		player_load(&s_player, &s_room, 0);
 	}
 
 	player_tick(&s_player, DeltaT, &s_room);
@@ -66,6 +66,8 @@ void play_state_tick(float DeltaT)
 void play_state_draw()
 {
 	graphics_prepare();
+
+	graphics_play_draw();
 
 	room_draw(&s_room);
 	player_draw(&s_player);

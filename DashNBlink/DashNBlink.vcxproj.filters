@@ -29,6 +29,7 @@
     <ClInclude Include="src\play_state.h" />
     <ClInclude Include="src\keyboard.h" />
     <ClInclude Include="src\mouse.h" />
+    <ClInclude Include="src\struct.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game.h">
@@ -55,13 +56,11 @@
     <ClInclude Include="src\player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\struct.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\tile.shader" />
     <None Include="res\shaders\player.shader" />
     <None Include="res\shaders\tile.shader" />
+    <None Include="res\shaders\start.shader" />
   </ItemGroup>
 </Project>
