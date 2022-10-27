@@ -1,10 +1,13 @@
 #include "tiles.h"
 
 #include <iostream>
+#include <sstream>
 
 #include "stb_image.h"
 
 #include "graphics.h"
+
+#define PI 3.141592
 
 void sprite_sheet_create(sprite_sheet* sheet, const char* sprites)
 {
@@ -29,12 +32,17 @@ extern void sprite_sheet_destroy(sprite_sheet* sheet)
 	texture_destroy(&(sheet->tex));
 }
 
-void room_load(room* room, const char* map, const char* lookup)
+void room_load(room* room, const char* map, const char* lookup, int index)
 {
+	std::stringstream map_path;
+	map_path << map;
+	map_path << index;
+	map_path << ".png";
+
 	stbi_set_flip_vertically_on_load(1);
 
 	int map_width, map_height, bpp;
-	unsigned char* map_buffer = stbi_load(map, &map_width, &map_height, &bpp, 3);
+	unsigned char* map_buffer = stbi_load(map_path.str().c_str(), &map_width, &map_height, &bpp, 3);
 
 	if (map_buffer == nullptr)
 	{
@@ -51,6 +59,18 @@ void room_load(room* room, const char* map, const char* lookup)
 		return;
 	}
 
+	int startAngle[16] =
+	{
+		0, 0, 0, 0, 0, 0, 0 ,0,
+		4, 4, 1, 1, 1, 7, 0, 0, 
+	};
+
+	float angles[8] =
+	{
+		0,PI/4,PI/2,3*PI/4,PI,5*PI/4,6*PI/4,7*PI/4
+	};
+
+
 	for (int y = 0; y < map_height; y++)
 	{
 		for (int x = 0; x < map_width; x++)
@@ -61,9 +81,24 @@ void room_load(room* room, const char* map, const char* lookup)
 					lookup_buffer[i * 3 + 1] == map_buffer[(y * map_width + x) * 3 + 1] && 
 					lookup_buffer[i * 3 + 2] == map_buffer[(y * map_width + x) * 3 + 2])
 				{
-					room->tiles[x][y].index = i;
+					int lookup_x = i % 16;
+					int lookup_y = i / 16;
 
-					//std::cout << i << std::endl;
+					vec2 v{ 1,0 };
+
+					if (lookup_y == 0)
+					{
+						v.x = 0;
+					}
+
+					vec2 v2{ 0,0 };
+					rotateVec2(&v, &v2, angles[startAngle[lookup_y] % 8]);
+
+					vec2 v3{ 0,0 };
+					rotateVec2(&v2, &v3, 2 * angles[lookup_x /4]);
+					room->tiles[x][y].index = i;
+					
+					room->tiles[x][y].facing = v3;
 				}
 			}
 		}
@@ -72,6 +107,18 @@ void room_load(room* room, const char* map, const char* lookup)
 	stbi_image_free(lookup_buffer);
 
 	stbi_image_free(map_buffer);
+
+	room->map = map;
+	room->lookup = lookup;
+	room->index = index;
+}
+
+void room_load_next(room* room)
+{
+	int new_index = room->index + 1;
+	const char* map = room->map;
+	const char* lookup = room->lookup;
+	room_load(room, map, lookup, new_index);
 }
 
 void room_draw(const room* room)
